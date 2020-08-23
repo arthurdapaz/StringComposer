@@ -8,7 +8,7 @@
 import UIKit
 
 public protocol BaseComposer {
-    var composed: NSMutableAttributedString { get set }
+    var composed: NSMutableAttributedString { get }
 
     init(_ font: UIFont?, @StringComposer builder: () -> NSAttributedString)
 
@@ -48,6 +48,13 @@ public extension BaseComposer {
         let attachment = NSTextAttachment()
         attachment.image = image
         return NSAttributedString(attachment: attachment)
+    }
+
+    // handle a single paragraph :)
+    init(@StringComposer builder: () -> String) {
+        self.init(nil) { () -> NSAttributedString in
+            NSAttributedString(string: builder())
+        }
     }
 
     // modifiers

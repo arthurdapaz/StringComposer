@@ -10,15 +10,29 @@ import UIKit
 @_functionBuilder
 public struct Paragraph: BaseComposer {
 
-    public var composed: NSMutableAttributedString
+    public var style: NSMutableParagraphStyle = Paragraph.getParagraph()
 
-    public var paragraph: NSMutableParagraphStyle = Paragraph.getParagraph()
+    private var _composed: NSMutableAttributedString
+    public var composed: NSMutableAttributedString {
+        get {
+            let range = NSRange(location: 0, length: _composed.string.count)
+            _composed.addAttribute(.paragraphStyle, value: style, range: range)
+            return _composed
+        }
+    }
 
     public init(_ font: UIFont? = nil, @StringComposer builder: () -> NSAttributedString) {
         if let font = font {
             StringComposer.font = font
         }
-        composed = builder().mutableCopy() as! NSMutableAttributedString
+        _composed = builder().mutableCopy() as! NSMutableAttributedString
+    }
+
+    public var isLastParagraph: Bool = false
+    public func last() -> Paragraph {
+        var copy = self
+        copy.isLastParagraph = true
+        return copy
     }
 
     // MARK: - Default Paragraph
@@ -58,78 +72,78 @@ public struct Paragraph: BaseComposer {
     }
 
     // MARK: - Paragraph Properties
-    public func alignment(_ alignment: NSTextAlignment = NSParagraphStyle.default.alignment) -> Paragraph {
-        paragraph.alignment = alignment
+    public func alignment(_ ₁: NSTextAlignment) -> Paragraph {
+        style.alignment = ₁
         return self
     }
 
-    public func firstLineHeadIndent(_ firstLineHeadIndent: CGFloat = NSParagraphStyle.default.firstLineHeadIndent) -> Paragraph {
-        paragraph.firstLineHeadIndent = firstLineHeadIndent
+    public func firstLineHeadIndent(_ ₁: CGFloat) -> Paragraph {
+        style.firstLineHeadIndent = ₁
         return self
     }
 
-    public func headIndent(_ headIndent: CGFloat = NSParagraphStyle.default.headIndent) -> Paragraph {
-        paragraph.headIndent = headIndent
+    public func headIndent(_ ₁: CGFloat) -> Paragraph {
+        style.headIndent = ₁
         return self
     }
 
-    public func tailIndent(_ tailIndent: CGFloat = NSParagraphStyle.default.tailIndent) -> Paragraph {
-        paragraph.tailIndent = tailIndent
+    public func tailIndent(_ ₁: CGFloat) -> Paragraph {
+        style.tailIndent = ₁
         return self
     }
 
-    public func lineBreakMode(_ lineBreakMode: NSLineBreakMode = NSParagraphStyle.default.lineBreakMode) -> Paragraph {
-        paragraph.lineBreakMode = lineBreakMode
+    public func lineBreakMode(_ ₁: NSLineBreakMode) -> Paragraph {
+        style.lineBreakMode = ₁
         return self
     }
 
-    public func maximumLineHeight(_ maximumLineHeight: CGFloat = NSParagraphStyle.default.maximumLineHeight) -> Paragraph {
-        paragraph.maximumLineHeight = maximumLineHeight
+    public func maximumLineHeight(_ ₁: CGFloat) -> Paragraph {
+        style.maximumLineHeight = ₁
         return self
     }
 
-    public func minimumLineHeight(_ minimumLineHeight: CGFloat = NSParagraphStyle.default.minimumLineHeight) -> Paragraph {
-        paragraph.minimumLineHeight = minimumLineHeight
+    public func minimumLineHeight(_ ₁: CGFloat) -> Paragraph {
+        style.minimumLineHeight = ₁
         return self
     }
 
-    public func lineSpacing(_ lineSpacing: CGFloat = NSParagraphStyle.default.lineSpacing) -> Paragraph {
-        paragraph.lineSpacing = lineSpacing
+    public func lineSpacing(_ ₁: CGFloat) -> Paragraph {
+        style.lineSpacing = ₁
         return self
     }
 
-    public func lineHeightMultiple(_ lineHeightMultiple: CGFloat = NSParagraphStyle.default.lineHeightMultiple) -> Paragraph {
-        paragraph.lineHeightMultiple = lineHeightMultiple
+    public func lineHeightMultiple(_ ₁: CGFloat) -> Paragraph {
+        style.lineHeightMultiple = ₁
         return self
     }
 
-    public func paragraphSpacing(_ paragraphSpacing: CGFloat = NSParagraphStyle.default.paragraphSpacing) -> Paragraph {
-        paragraph.paragraphSpacing = paragraphSpacing
+    public func paragraphSpacing(_ ₁: CGFloat) -> Paragraph {
+        style.paragraphSpacing = ₁
         return self
     }
 
-    public func paragraphSpacingBefore(_ paragraphSpacingBefore: CGFloat = NSParagraphStyle.default.paragraphSpacingBefore) -> Paragraph {
-        paragraph.paragraphSpacingBefore = paragraphSpacingBefore
+    public func paragraphSpacingBefore(_ ₁: CGFloat) -> Paragraph {
+        style.paragraphSpacingBefore = ₁
         return self
     }
 
-    public func hyphenationFactor(_ hyphenationFactor: Float = NSParagraphStyle.default.hyphenationFactor) -> Paragraph {
-        paragraph.hyphenationFactor = hyphenationFactor
+    public func hyphenationFactor(_ ₁: Float) -> Paragraph {
+        style.hyphenationFactor = ₁
         return self
     }
 
-    public func writingDirection(_ writingDirection: NSWritingDirection = NSParagraphStyle.default.baseWritingDirection) -> Paragraph {
-        paragraph.baseWritingDirection = writingDirection
+    public func writingDirection(_ ₁: NSWritingDirection) -> Paragraph {
+        style.baseWritingDirection = ₁
         return self
     }
 
-    public func tabStops(_ tabStops: [NSTextTab] = NSParagraphStyle.default.tabStops) -> Paragraph {
-        paragraph.tabStops = tabStops
+    public func tabStops(_ ₁: [NSTextTab]) -> Paragraph {
+        style.tabStops = ₁
         return self
     }
 
-    public func defaultTabInterval(_ defaultTabInterval: CGFloat = NSParagraphStyle.default.defaultTabInterval) -> Paragraph {
-        paragraph.defaultTabInterval = defaultTabInterval
+    public func defaultTabInterval(_ ₁: CGFloat) -> Paragraph {
+        style.defaultTabInterval = ₁
         return self
     }
 

@@ -28,28 +28,11 @@ public struct StringComposer: BaseComposer {
         self.composed = builder().composed
     }
 
-    public static func buildExpression(_ paragraphs: [Paragraph]) -> NSAttributedString {
-        let breakline = NSAttributedString(string: "\n")
-        let result = NSMutableAttributedString(string: "")
-
-        for (index, p) in paragraphs.enumerated() {
-
-            let attributedParagraph = NSMutableAttributedString(attributedString: p.composed)
-            let range = NSRange(location: 0, length: p.composed.string.count)
-            attributedParagraph.addAttribute(.paragraphStyle, value: p.paragraph, range: range)
-
-            result.append(attributedParagraph)
-
-            // last element
-            if index != paragraphs.endIndex-1 {
-                result.append(breakline)
-            }
-        }
-
-        return result
-    }
-
     public static func buildExpression(_ paragraph: Paragraph) -> NSAttributedString {
+        if !paragraph.isLastParagraph {
+            let breakline = NSAttributedString(string: "\n")
+            paragraph.composed.append(breakline)
+        }
         return paragraph.composed
     }
 
