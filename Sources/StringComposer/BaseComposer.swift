@@ -1,6 +1,6 @@
 //
 //  StringComposerBase.swift
-//  
+//  StringComposer
 //
 //  Created by Arthur da Paz on 18/08/20.
 //
