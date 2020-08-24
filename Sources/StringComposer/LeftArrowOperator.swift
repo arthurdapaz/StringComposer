@@ -52,3 +52,12 @@ public func <- (left: UIImage, right: ImageAttribute) -> NSAttributedString {
 public func <- (left: String, right: FontAttribute) -> NSAttributedString {
     NSAttributedString(string: left, attributes: [.font: right.value])
 }
+
+@discardableResult
+public func <- (left: NSAttributedString, right: FontAttribute) -> NSAttributedString {
+    let copy = left.mutableCopy() as! NSMutableAttributedString
+
+    let range = NSRange(location: 0, length: left.string.count)
+    copy.addAttribute(.font, value: right.value, range: range)
+    return copy
+}
