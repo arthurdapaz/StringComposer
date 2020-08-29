@@ -15,11 +15,7 @@ public struct StringComposer: BaseComposer {
 
     public var composed: NSMutableAttributedString
 
-    public init(_ font: UIFont? = nil, @StringComposer builder: () -> NSAttributedString) {
-        if let font = font {
-            Self.font = font
-        }
-
+    public init(@StringComposer builder: () -> NSAttributedString) {
         self.composed = builder().mutableCopy() as! NSMutableAttributedString
     }
 
@@ -27,6 +23,7 @@ public struct StringComposer: BaseComposer {
     public init(@StringComposer builder: () -> Paragraph) {
         self.composed = builder().composed
     }
+
 
     public static func buildExpression(_ paragraph: Paragraph) -> NSAttributedString {
         if !paragraph.isLastParagraph {

@@ -41,3 +41,15 @@ public enum FontAttribute {
         }
     }
 }
+
+public enum ExtraAttribute {
+    case breakline
+    case space
+
+    public var value: String {
+        switch self {
+        case .breakline: return "\n"
+        case .space: return " "
+        }
+    }
+}

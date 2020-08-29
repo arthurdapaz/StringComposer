@@ -10,7 +10,7 @@ import UIKit
 public protocol BaseComposer {
     var composed: NSMutableAttributedString { get }
 
-    init(_ font: UIFont?, @StringComposer builder: () -> NSAttributedString)
+    init(@StringComposer builder: () -> NSAttributedString)
 
     static func buildBlock(_ components: NSAttributedString...) -> NSAttributedString
     static func buildExpression(_ string: String) -> NSAttributedString
@@ -50,10 +50,18 @@ public extension BaseComposer {
         return NSAttributedString(attachment: attachment)
     }
 
-    // handle a single paragraph :)
+    // handle a single string :)
     init(@StringComposer builder: () -> String) {
-        self.init(nil) { () -> NSAttributedString in
+        self.init { () -> NSAttributedString in
             NSAttributedString(string: builder())
+        }
+    }
+
+    init(@StringComposer builder: () -> UIImage) {
+        self.init { () -> NSAttributedString in
+            let attachment = NSTextAttachment()
+            attachment.image = builder()
+            return NSAttributedString(attachment: attachment)
         }
     }
 

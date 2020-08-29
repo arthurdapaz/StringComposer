@@ -40,7 +40,13 @@ internal extension UIFont {
     }
 
     func with(weight: Weight) -> UIFont {
-        let weightedFontDescriptor = fontDescriptor.addingAttributes([
+
+        #warning("try to make this better")
+        //let defaultDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: style)
+
+        let baseFontDescriptor = StringComposer.font.fontDescriptor
+
+        let weightedFontDescriptor = baseFontDescriptor.addingAttributes([
             UIFontDescriptor.AttributeName.traits: [
                 UIFontDescriptor.TraitKey.weight: weight
             ]
